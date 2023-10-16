@@ -38,7 +38,7 @@ class MetasReepository {
   Future alterarMeta(Meta meta) async {
     final supabase = Supabase.instance.client;
 
-    await supabase.from('transacoes').update({
+    await supabase.from('metas').update({
       'descricao': meta.descricao,
       'user_id': meta.userId,
       'valor': meta.valor,

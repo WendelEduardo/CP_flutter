@@ -225,10 +225,10 @@ TextFormField _buildData() {
 
             if (widget.metaParaEdicao == null) {
               await _cadastrarMeta(meta);
-            } /*else {
-              transacao.id = widget.transacaoParaEdicao!.id;
-              await _alterarTransacao(transacao);
-            }*/
+            } else {
+              meta.id = widget.metaParaEdicao!.id;
+              await _alterarMeta(meta);
+            }
           }
         },
         child: const Text('Cadastrar'),
@@ -252,6 +252,28 @@ TextFormField _buildData() {
       scaffold.showSnackBar(SnackBar(
         content: Text(
           'Erro ao cadastrar meta',
+        ),
+      ));
+
+      Navigator.of(context).pop(false);
+    });
+  }
+
+  Future<void> _alterarMeta(Meta meta) async {
+    final scaffold = ScaffoldMessenger.of(context);
+    await metasRepo.alterarMeta(meta).then((_) {
+      // Mensagem de Sucesso
+      scaffold.showSnackBar(SnackBar(
+        content: Text(
+          'Meta alterada com sucesso',
+        ),
+      ));
+      Navigator.of(context).pop(true);
+    }).catchError((error) {
+      // Mensagem de Erro
+      scaffold.showSnackBar(SnackBar(
+        content: Text(
+          'Erro ao alterar meta',
         ),
       ));
 
